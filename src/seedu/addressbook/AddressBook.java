@@ -473,11 +473,11 @@ public class AddressBook {
      * @return set of keywords as specified by args
      */
     private static Set<String> extractKeywordsFromFindPersonArgs(String findPersonCommandArgs) {
-        return new HashSet<>(splitByWhitespace(findPersonCommandArgs.trim()));
+        return new HashSet<>(splitByWhitespace(findPersonCommandArgs.trim().toLowerCase()));
     }
 
     /**
-     * Retrieves all persons in the full model whose names contain some of the specified keywords.
+     * Retrieves all persons in the full model whose names contain some of the specified keywords (case-insensitive).
      *
      * @param keywords for searching
      * @return list of persons in full model with name containing some of the keywords
@@ -485,7 +485,7 @@ public class AddressBook {
     private static ArrayList<String[]> getPersonsWithNameContainingAnyKeyword(Collection<String> keywords) {
         final ArrayList<String[]> matchedPersons = new ArrayList<>();
         for (String[] person : getAllPersonsInAddressBook()) {
-            final Set<String> wordsInName = new HashSet<>(splitByWhitespace(getNameFromPerson(person)));
+            final Set<String> wordsInName = new HashSet<>(splitByWhitespace(getNameFromPerson(person).toLowerCase()));
             if (!Collections.disjoint(wordsInName, keywords)) {
                 matchedPersons.add(person);
             }
